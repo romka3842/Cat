@@ -103,7 +103,7 @@ public class Cat : MonoBehaviour
         {
             _rigidbody.AddForce(Vector3.up * _jumpSpeed );
             //_meowSound.Play();
-            print("Пробел");
+            //print("Пробел");
         }
     }
     public void MobileJump()
