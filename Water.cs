@@ -28,15 +28,17 @@ public class Water : MonoBehaviour
     }*/
     public void OnTriggerStay(Collider other)
     {
-        other.gameObject.transform.position = respawn.transform.position;
+        //other.gameObject.transform.position = respawn.transform.position;
         //other.attachedRigidbody.AddForce(Vector3.up * ArchimedForce);
         //other.attachedRigidbody.drag = 2f;
-        other.gameObject.GetComponent<AudioSource>().Play();
+        //other.gameObject.GetComponent<AudioSource>().Play();
     }
     public void OnTriggerEnter(Collider other)
     {
-       // if (check.gameObject.tag == "Cat")
-            //other.gameObject.GetComponent<AudioSource>().Play();
+        other.gameObject.transform.position = respawn.transform.position;
+        other.gameObject.GetComponent<AudioSource>().Play();
+        // if (check.gameObject.tag == "Cat")
+        //other.gameObject.GetComponent<AudioSource>().Play();
     }
    
     public void OnTriggerExit(Collider other)
