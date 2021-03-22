@@ -84,9 +84,10 @@ public class Cat : MonoBehaviour
     public void MobileMove()
     {
         float MoveCat = _joystick.Horizontal * _speed;
-        Vector3 forward = Vector3.zero;
-        Vector3 back = new Vector3(0, -180, 0);
+        //Vector3 forward = Vector3.zero;
+        //Vector3 back = new Vector3(0, -180, 0);
         transform.position = transform.position + transform.forward * (-MoveCat);
+        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0.0f, 90.0f * -_joystick.Horizontal, 0.0f), 0.1f);
         if (_joystick.Horizontal == 0)
         {
             _catAnimator.SetBool("Walk", false);
