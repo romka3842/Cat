@@ -17,8 +17,9 @@ public class Cat : MonoBehaviour
     public LayerMask Ground;
     public Joystick _joystick;
     protected int lifes = 8;
+    protected Vector3 moveVector;
 
-    [Range(0.0f, 1.0f)]
+    //[Range(0.0f, 1.0f)]
     public float T;
 
 
@@ -33,14 +34,11 @@ public class Cat : MonoBehaviour
 
     // Update is called once per frame
     void FixedUpdate()
-    {
-        //MovingCatTransform();       
+    {     
         MobileMove();
     }
     void Update()
     {
-        //CatAnimation();
-        //Jump();
 
     }
     public void OnCollisionStay (Collision collision)
@@ -67,6 +65,9 @@ public class Cat : MonoBehaviour
         _rigidbody.AddForce(new Vector3(MoveCat,0,0));
       
     }
+    /// <summary>
+    /// Метод для перемещения персонажа с клавиатуры
+    /// </summary>
     public void MovingCatTransform()
     {
         float MoveCat = Input.GetAxis("Horizontal") * _speed;
@@ -84,15 +85,23 @@ public class Cat : MonoBehaviour
         }
         */
     }
+    /// <summary>
+    /// Метод перемещения персонажа на мобильном устройстве
+    /// </summary>
     public void MobileMove()
     {
         float MoveCat = _joystick.Horizontal * _speed;
-        //Vector3 forward = Vector3.zero;
-        //Vector3 back = new Vector3(0, -180, 0);
-        transform.position = transform.position + transform.forward * (-MoveCat);
-        //Vector3 direct = Vector3.RotateTowards(Vector3.right, Vector3.right * _joystick.Horizontal, _speed, 0.0f);
-        //transform.rotation = Quaternion.LookRotation(direct);
-        //transform.rotation = Quaternion.Lerp(Quaternion.Euler(0.0f,-90.0f,0.0f), Quaternion.Euler(0.0f, 90f * -_joystick.Horizontal, 0.0f), T);
+        if (_joystick.Horizontal > 0.0f)
+        {
+            transform.position = transform.position - transform.forward * MoveCat;
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0.0f, -90f, 0.0f), 1f);
+        }
+        if (_joystick.Horizontal < 0.0f)
+        {
+            transform.position = transform.position - transform.forward * (-MoveCat);
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0.0f, 90f, 0.0f), 1f);
+        }
+        
         if (_joystick.Horizontal == 0)
         {
             _catAnimator.SetBool("Walk", false);
@@ -102,7 +111,6 @@ public class Cat : MonoBehaviour
             _catAnimator.SetBool("Walk", true);
         }
     }
-
     public void Jump()
     {        
         if (Input.GetKeyDown(KeyCode.Space) && _onGround == true)
@@ -120,7 +128,7 @@ public class Cat : MonoBehaviour
             _catAnimator.SetBool("Jump", true);
         }
     }
-    public void MobileJumpFalse()
+   public void MobileJumpFalse()
     {
         if (_onGround == false)
         {
