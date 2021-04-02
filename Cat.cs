@@ -18,6 +18,9 @@ public class Cat : MonoBehaviour
     public Joystick _joystick;
     protected int lifes = 8;
 
+    [Range(0.0f, 1.0f)]
+    public float T;
+
 
     // Start is called before the first frame update
     void Start()
@@ -87,7 +90,9 @@ public class Cat : MonoBehaviour
         //Vector3 forward = Vector3.zero;
         //Vector3 back = new Vector3(0, -180, 0);
         transform.position = transform.position + transform.forward * (-MoveCat);
-        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0.0f, 90.0f * -_joystick.Horizontal, 0.0f), 0.1f);
+        //Vector3 direct = Vector3.RotateTowards(Vector3.right, Vector3.right * _joystick.Horizontal, _speed, 0.0f);
+        //transform.rotation = Quaternion.LookRotation(direct);
+        //transform.rotation = Quaternion.Lerp(Quaternion.Euler(0.0f,-90.0f,0.0f), Quaternion.Euler(0.0f, 90f * -_joystick.Horizontal, 0.0f), T);
         if (_joystick.Horizontal == 0)
         {
             _catAnimator.SetBool("Walk", false);
